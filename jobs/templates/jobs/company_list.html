@@ -1,0 +1,21 @@
+{% extends "jobs/base.html" %}
+{% block title %}Companies — JobBoard{% endblock %}
+{% block content %}
+<div class="container">
+  <h1 style="font-size:2rem;font-weight:800;margin-bottom:2rem;">Companies Hiring Now</h1>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;">
+    {% for company in companies %}
+    <a href="{% url 'company_detail' company.pk %}" style="background:#fff;border-radius:12px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,0.08);display:block;transition:box-shadow 0.2s;">
+      <h2 style="font-size:1.1rem;font-weight:700;color:#1e293b;margin-bottom:0.5rem;">{{ company.name }}</h2>
+      <p style="color:#64748b;font-size:0.85rem;margin-bottom:1rem;line-height:1.5;">{{ company.description|truncatechars:100 }}</p>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span class="badge badge-green">{{ company.job_count }} open role{{ company.job_count|pluralize }}</span>
+        {% if company.website %}<span style="font-size:0.8rem;color:#6366f1;">{{ company.website|truncatechars:30 }}</span>{% endif %}
+      </div>
+    </a>
+    {% empty %}
+    <p style="color:#94a3b8;">No companies yet.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
